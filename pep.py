@@ -125,7 +125,7 @@ def main():
 			log.error("Error while creating threads pool. Please check your config.ini and run the server again")
 
 		# Start fokabot
-		log.info("Connecting RealistikBot...")
+		log.info("Connecting Miku...")
 		fokabot.connect()
 		log.info("Complete!")
 

@@ -556,7 +556,7 @@ def freeze(fro, chan, message):
 
 	targetToken = glob.tokens.getTokenFromUsername(username_safe(target), safe=True)
 	if targetToken is not None:
-		targetToken.enqueue(serverPackets.notification("You have been frozen! The RealistikOsu staff team has found you suspicious and would like to request a liveplay. Visit ussr.pl for more info."))
+		targetToken.enqueue(serverPackets.notification("You have been frozen! The Denopia staff team has found you SUS and would like to request a liveplay. Visit denopia.ml for more info."))
 
 	log.rap(userID, f"has frozen {target}", True)
 	return "User has been frozen!"
@@ -579,7 +579,7 @@ def unfreeze(fro, chan, message):
 
 	targetToken = glob.tokens.getTokenFromUsername(username_safe(target), safe=True)
 	if targetToken is not None:
-		targetToken.enqueue(serverPackets.notification("Your account has been unfrozen! You have proven your legitemacy. Thank you and have fun playing on RealistikOsu!"))
+		targetToken.enqueue(serverPackets.notification("Your account has been unfrozen! You have proven your legitemacy. Thank you and have fun playing on Denopia!"))
 
 	log.rap(userID, "has unfrozen {}".format(target), True)
 	return "User has been unfrozen!"
@@ -1570,7 +1570,7 @@ def help_cmd(fro, chan, message):
 
 		help_cmd.append(f"{1+idx+(CMD_PER_PAGE*(index-1))}. - {name} - {docstr}")
 
-	header = [f"--- {index} of {pages} pages of commands currently available on RealistikOsu! ---"]
+	header = [f"--- {index} of {pages} pages of commands currently available on Denopia's Miku! ---"]
 	if index == 1:
 		help_cmd.append("You can check syntax of individual command using !syntax <command eg. !help>")
 	return "\n".join(header + help_cmd)

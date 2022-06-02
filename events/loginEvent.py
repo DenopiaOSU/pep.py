@@ -321,10 +321,9 @@ def handle(tornadoRequest):
 		t_str = t.end_time_str()
 		online_users = len(glob.tokens.tokens)
 		# Wylie has his own quote he gets to enjoy only himself lmfao. UPDATE: Electro gets it too.
-		if userID is 1000: quote = "I lost an S because I saw her lewd"
+		if userID == 1000: quote = "I lost an S because I saw her lewd"
 		# Ced also gets his own AS HE DOESNT WANT TO CHECK FAST SPEED.
 		elif userID == 1001: quote = "juSt Do iT"
-		# Me and relesto are getting one as well lmao. UPDATE: Sky and Aochi gets it too lmao.
 
 		quote = random.choice(glob.banchoConf.config['Quotes'])
 		notif = f"""- Online Users: {online_users}\n- {quote}"""
