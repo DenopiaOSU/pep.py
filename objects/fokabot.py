@@ -19,7 +19,7 @@ def connect():
 	glob.BOT_NAME = userUtils.getUsername(999)
 	token = glob.tokens.addToken(999)
 	token.actionID = actions.WATCHING
-	token.actionText = "over RealistikOsu!"
+	token.actionText = "pornhub.com"
 	token.pp = 69
 	token.accuracy = 0.69
 	token.playcount = 69
@@ -53,8 +53,8 @@ def fokabotResponse(fro, chan, message):
 	:return: FokaBot's response or False if no response
 	"""
 	DEFAULT_RESPONSE = (
-		f"Hello I'm {glob.BOT_NAME}! The server's official bot to assist you, "
-		"if you want to know what I can do just type !help"
+		f"Hey, im Miku! Denopia's official bot to assist you, "
+		"if you want to know what commands I have, just type !help :)"
 	)
 	start = time.perf_counter_ns()
 
@@ -94,7 +94,7 @@ def fokabotResponse(fro, chan, message):
 			# If exception happens, handle it well.
 			tb = traceback.format_exc()
 			log.error(f"There was an issue while running '{cmd.trigger}' command. \nTraceback: {tb}")
-			resp = ["There was issue while processing your command, please report this to RealistikOsu developer!"]
+			resp = ["There was issue while processing your command, please report this to one of the Denopia developers!"]
 			# Debugging for staff
 			if user.admin:
 				resp.append(tb)
