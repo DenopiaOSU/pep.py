@@ -677,15 +677,15 @@ def systemStatus(fro, chan, message):
 	msg = "\n".join((
 		"---> Denopia Server Statistics <---",
 		" - Realtime Bancho Server -",
-		"> Running Denopia's Realistik pep.py fork.",
-		f"> Online Users: {data['connectedUsers']}",
-		f"> Multiplayer: {data['matches']}",
-		f"> Uptime: {data['uptime']}",
+		"> Running Denopia's pep.py fork.",
+		f"> Online Users: {str(data['connectedUsers'])}",
+		f"> Multiplayer: {str(data['matches'])}",
+		f"> Uptime: {str(data['uptime'])}",
 		"",
 		" - System Statistics -",
-		f"> CPU Utilisation: {data['cpuUsage']}%",
-		f"> RAM Utilisation: {data['usedMemory']}/{data['totalMemory']}",
-		f"> CPU Utilisation History: {'%, '.join(data['loadAverage'])}"
+		f"> CPU Utilisation: {str(data['cpuUsage'])}%",
+		f"> RAM Utilisation: {str(data['usedMemory'])}/{str(data['totalMemory'])}",
+		f"> CPU Utilisation History: {'%, '.join(str(data['loadAverage']))}"
 	))
 
 	return msg
