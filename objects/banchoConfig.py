@@ -39,20 +39,20 @@ class banchoConfig:
 			self.config["menuIcon"] = "{}|{}".format(imageURL, mainMenuIcon["url"])
 		#self.config["loginNotification"] = glob.db.fetch("SELECT value_string FROM bancho_settings WHERE name = 'login_notification'")["value_string"]
 		self.config["Quotes"] = [
-			"Don't forget to visit c.ussr.pl!",
+			"Don't forget to visit denopia.ml!",
 			"WE SERVE THE SOVIET UNION!",
 			"Ran by best VEVO channel!",
 			"Stay home! Click circles!",
 			"Spelchecked!",
 			"Screw you segmentation!",
-			"I forgot how to decrypt bcrypt",
-			"Introducing  :  Time",
-			"Python to the moon!",
+			"I forgot how to decrypt bcrypt lmao",
+			"Introducing  :  Time, a concept new to OSU! Players!",
+			"Python to the moon uwu",
 			"We have the best devsSyntaxError: good_devs is not defined.",
 			"Powered by electricity!",
-			"i still can't decrypt bcrypt",
+			"how the fuck do i decrypt bcrypt lmao",
 			"how to run py on 7m??",
-			"It may not work, but it is fast!"
+			"It may not work, butSyntaxError: work is not defined."
 		]
 
 

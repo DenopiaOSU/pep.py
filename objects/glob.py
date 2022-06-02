@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 # Consts.
 DATADOG_PREFIX = "peppy"
-BOT_NAME = "RealistikBot"
+BOT_NAME = "Miku"
 
 __version__ = "3.1.0"
 
