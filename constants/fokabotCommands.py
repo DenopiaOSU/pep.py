@@ -679,13 +679,12 @@ def systemStatus(fro, chan, message):
 		" - Realtime Bancho Server -",
 		"> Running Denopia's pep.py fork.",
 		f"> Online Users: {str(data['connectedUsers'])}",
-		f"> Multiplayer: {str(data['matches'])}",
+		f"> Multiplayer Matches: {str(data['matches'])}",
 		f"> Uptime: {str(data['uptime'])}",
 		"",
 		" - System Statistics -",
 		f"> CPU Utilisation: {str(data['cpuUsage'])}%",
 		f"> RAM Utilisation: {str(data['usedMemory'])}/{str(data['totalMemory'])}",
-		f"> CPU Utilisation History: {'%, '.join(str(data['loadAverage']))}"
 	))
 
 	return msg
