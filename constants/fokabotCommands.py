@@ -67,7 +67,7 @@ def refresh_all_lbs(md5: str) -> None:
 		for mode in (0, 1, 2, 3): refresh_lb_cache(md5, mode, c_mode)
 
 def calc_completion(bmapid, n300, n100, n50, miss):
-	bmap = osupyparser.OsuFile(f"/home/realistikosu/ussr/.data/maps/{bmapid}.osu").parse_file()
+	bmap = osupyparser.OsuFile(f"/opt/ainuuwu/pep.py/.data/maps/{bmapid}.osu").parse_file()
 
 	total_hits = int(n300 + n100 + n50 + miss)
 
@@ -152,7 +152,7 @@ def getPPMessage(userID, just_data = False):
 		currentAcc = token.tillerino[2]
 
 		# Send request to LETS api
-		url = f"http://localhost:5002/api/v1/pp?b={currentMap}&m={currentMods}"
+		url = f"http://localhost:2137/api/v1/pp?b={currentMap}&m={currentMods}"
 		if currentAcc != -1:
 			url += f"&a{currentAcc}"
 		resp = requests.get(url, timeout=10)
@@ -183,7 +183,7 @@ def getPPMessage(userID, just_data = False):
 		return msg
 	except requests.exceptions.RequestException:
 		# RequestException
-		return "Score server API timeout. Please try again in a few seconds."
+		return "USSR API timeout. Please try again in a few seconds. If this doesnt work, the servers are burning down.. (help)"
 	
 """
 Commands callbacks
@@ -234,7 +234,7 @@ def editMap(fro: str, chan: str, message: list[str]) -> str:
 		[token.tillerino[0]]
 	)
 	if not res:
-		return "Could not find beatmap."
+		return "Could not find map.."
 
 	if res["ranked"] == status:
 		return f"That map is already {status_readable}!"
@@ -262,12 +262,12 @@ def editMap(fro: str, chan: str, message: list[str]) -> str:
 		webhook = DiscordWebhook(url=conf.NEW_RANKED_WEBHOOK)
 		embed = DiscordEmbed(description=f"Ranked by {fro}", color=242424)
 		embed.set_author(name=f"{map_name} was just {status_readable}", url=f"https://ussr.pl/beatmaps/{token.tillerino[0]}", icon_url=f"https://a.ussr.pl/{token.userID}")
-		embed.set_footer(text="via RealistikPanel!")
+		embed.set_footer(text="Enjoy!")
 		embed.set_image(url=f"https://assets.ppy.sh/beatmaps/{res['beatmapset_id']}/covers/cover.jpg")
 		webhook.add_embed(embed)
 		webhook.execute()
 
-	chat.sendMessage(glob.BOT_NAME, '#announce', f'[https://ussr.pl/u/{token.userID} {fro}] has {status_readable} {beatmap_url}')
+	chat.sendMessage(glob.BOT_NAME, '#announce', f'[https://dolphinisretarded.xyz/u/{token.userID} {fro}] has {status_readable} {beatmap_url}')
 	return f'Successfully {status_readable} a map.'
 
 @registerCommand(trigger= "!ir", privs= privileges.ADMIN_MANAGE_SERVERS)
@@ -366,14 +366,14 @@ def kick(fro, chan, message):
 		i.kick()
 
 	# Bot response
-	return f"{target} has been kicked from the server."
+	return f"{target} has been yeeted from bancho. Eh, oh well, no one liked {target} anyway though, right?"
 
 @registerCommand(trigger= "!bot reconnect", privs= privileges.ADMIN_MANAGE_SERVERS)
 def fokabotReconnect(fro, chan, message):
 	"""Forces the bot to reconnect."""
 	# Check if the bot is already connected
 	if glob.tokens.getTokenFromUserID(999) is not None:
-		return f"{glob.BOT_NAME} is already connected to RealistikOsu!"
+		return f"{glob.BOT_NAME} is already connected to Denopia!"
 
 	# Bot is not connected, connect it
 	fokabot.connect()
@@ -384,7 +384,7 @@ def reload_commands(fro, chan, mes) -> str:
 	"""Reloads all of the RealistikBot commands."""
 
 	fokabot.reload_commands()
-	return "RealistikBot has been reloaded successfully!"
+	return "Miku has been reloaded successfully!"
 
 @registerCommand(trigger= "!silence", syntax= "<target> <amount> <unit(s/m/h/d)> <reason>", privs= privileges.ADMIN_SILENCE_USERS)
 def silence(fro, chan, message):
@@ -476,8 +476,8 @@ def ban(fro, chan, message):
 	userID = userUtils.getID(fro)
 	if not targetUserID:
 		return f"{target}: user not found"
-	if targetUserID in (999, 1000, 1001, 1002, 1005):
-		return "NO!"
+	if targetUserID in (999, 1000, 1001, 1003):
+		return "Cant ban the people who made the server, dipshit!"
 	# Set allowed to 0
 	userUtils.ban(targetUserID)
 
@@ -518,8 +518,8 @@ def restrict(fro, chan, message):
 	userID = userUtils.getID(fro)
 	if not targetUserID:
 		return f"{target}: user not found"
-	if targetUserID in (999, 1000):
-		return "NO!"
+	if targetUserID in (999, 1000, 1001, 1003):
+		return "Cant restrict the people who made the server, dipshit!"
 		
 	# Put this user in restricted mode
 	userUtils.restrict(targetUserID)
@@ -542,6 +542,8 @@ def freeze(fro, chan, message):
 	userID = userUtils.getID(fro)
 	if not targetUserID:
 		return f"{target}: user not found"
+	if targetUserID in (999, 1000, 1001, 1003):
+		return "Cant freeze the people who made the server, dipshit!"
 
 	# Get date & prepare freeze date
 	now = datetime.now()
@@ -673,9 +675,9 @@ def systemStatus(fro, chan, message):
 	data = systemHelper.getSystemInfo()
 	
 	msg = "\n".join((
-		"---> RealistikOsu <---",
-		" - Realtime Server -",
-		"> Running RealistikOsu pep.py fork.",
+		"---> Denopia Server Statistics <---",
+		" - Realtime Bancho Server -",
+		"> Running Denopia's Realistik pep.py fork.",
 		f"> Online Users: {data['connectedUsers']}",
 		f"> Multiplayer: {data['matches']}",
 		f"> Uptime: {data['uptime']}",
@@ -857,7 +859,7 @@ def tillerinoLast(fro, chan, message):
 	token.tillerino[2] = fc_acc
 	oppaiData = getPPMessage(token.userID, just_data=True)
 	
-	user_embed = f"[https://ussr.pl/u/{token.userID} {fro}]"
+	user_embed = f"[https://dolphinisretarded.xyz/u/{token.userID} {fro}]"
 	map_embed = f"[http://ussr.pl/beatmaps/{data['bid']} {data['sn']}]"
 
 	response = [f"{user_embed} | {map_embed} +{generalUtils.readableMods(data['mods'])}"]
@@ -900,6 +902,8 @@ def report(fro, chan, message):
 		targetID = userUtils.getID(target)
 		if targetID == 0:
 			raise exceptions.userNotFoundException()
+		if targetUserID in (999, 1000, 1001, 1003):
+			return "Cant report the people who made the server, dipshit!"
 
 		# Make sure that the user has specified additional info if report reason is 'Other'
 		if reason.lower() == "other" and additionalInfo is None:
@@ -922,9 +926,9 @@ def report(fro, chan, message):
 		chat.sendMessage(glob.BOT_NAME, "#admin", adminMsg)
 		log.warning(adminMsg, discord="cm")
 	except exceptions.invalidUserException:
-		msg = f"Hello, {glob.BOT_NAME} here! You can't report me. I won't forget what you've tried to do. Watch out."
+		msg = f"Hey, Miku here! You can't report me. I won't forget what you've tried to do. Watch out. 24th December at 12:27PM."
 	except exceptions.invalidArgumentsException:
-		msg = "Invalid report command syntax. To report an user, click on it and select 'Report user'."
+		msg = "Invalid report command syntax. To report an user, click on them and select 'Report user'."
 	except exceptions.userNotFoundException:
 		msg = "The user you've tried to report doesn't exist."
 	except exceptions.missingReportInfoException:
@@ -1320,7 +1324,7 @@ def switchServer(fro, chan, message):
 
 	# Disconnect the user from the origin server
 	# userToken.kick()
-	return f"You have been connected to {newServer}"
+	return f"You have been connected to {newServer}, We hoped you enjoyed your stay on Denopia!"
 
 @registerCommand(trigger= "!announce", syntax= "<announcement>", privs= privileges.ADMIN_SEND_ALERTS)
 def postAnnouncement(fro, chan, message): # Post to #announce ingame
@@ -1425,7 +1429,7 @@ def crashuser(fro, chan, message):
 	targetToken = glob.tokens.getTokenFromUsername(username_safe(target), safe=True)
 	if targetToken == None:
 		#bruh they dont exist
-		return "bruh they literally dont exist"
+		return "bruh they literally dont exist you fucking mentally retarded cunt"
 	targetToken.enqueue(serverPackets.crash())
 	return ":^)"
 
@@ -1437,7 +1441,7 @@ def bless(fro: str, chan: str, message: str) -> str:
 
 	target = username_safe(" ".join(message))
 	t_user = glob.tokens.getTokenFromUsername(target, safe=True)
-	if not t_user: return "This user is not online, and may not be blessed."
+	if not t_user: return "This user is not online, and may not be blessed with the holy texts.."
 
 	# Acquire bible from file.
 	with open("bible.txt", "r") as stream:
@@ -1470,6 +1474,20 @@ ASCII_TROLL = (
 	"░░░░░░░░░░▀▀▄▄░▒▒▒▒▒▒▒▒▒▒░░░░█░\n"
 	"░░░░░░░░░░░░░░▀▄▄▄▄▄░░░░░░░░█░░\n"
 )
+
+@registerCommand(trigger="!trollnotif", syntax="<target>", privs=privileges.ADMIN_MANAGE_USERS)
+def trollnotif(fro: str, chan: str, message: str) -> str:
+	"""We do little bit of trolling :tf: (but this time through notifications)"""
+
+	target = username_safe(" ".join(message))
+	t_user = glob.tokens.getTokenFromUsername(target, safe=True)
+	if not t_user: return "This user is not online, and may not be notification trolled."
+	
+	# Use bytearray for speed
+	q = bytearray()
+	q += serverPackets.notification(ASCII_TROLL)
+	t_user.enqueue(q)
+	return "They have been notification trolled :tf:"
 
 @registerCommand(trigger= "!troll", syntax= "<target>", privs= privileges.ADMIN_MANAGE_USERS)
 def troll(fro: str, chan: str, message: str) -> str:
