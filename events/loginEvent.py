@@ -19,12 +19,13 @@ from helpers.geo_helper import get_full
 
 UNFREEZE_NOTIF = serverPackets.notification(
 	"Thank you for providing a liveplay! You have proven your legitemacy and "
-	"have subsequently been unfrozen. Have fun playing RealistikOsu!"
+	"have subsequently been unfrozen. Have fun playing on Denopia!"
 )
 FREEZE_RES_NOTIF = serverPackets.notification(
 	"Your window for liveplay sumbission has expired! Your account has been "
 	"restricted as per our cheating policy. Please contact staff for more "
-	"information on what can be done. This can be done via the RealistikCentral Discord server."
+	"information on what can be done. This can be done via the Denopia Discord"
+	"server here: https://discord.gg/tukB8TZ42V"
 )
 
 def handle(tornadoRequest):
@@ -77,7 +78,7 @@ def handle(tornadoRequest):
 		if not user_db:
 			# Invalid username
 			log.error(f"Login failed for user {username} (user not found)!")
-			responseData += serverPackets.notification("RealistikOsu: This user does not exist!")
+			responseData += serverPackets.notification("Denopia: This user does not exist!")
 			raise exceptions.loginFailedException()
 
 		userID = user_db["id"]
@@ -88,13 +89,13 @@ def handle(tornadoRequest):
 		if not verify_password(userID, loginData[1]):
 			# Invalid password
 			log.error(f"Login failed for user {username} (invalid password)!")
-			responseData += serverPackets.notification("RealistikOsu: Invalid password!")
+			responseData += serverPackets.notification("Denopia: Invalid password!")
 			raise exceptions.loginFailedException()
 
 		# Make sure we are not banned or locked
 		if (not priv & 3 > 0) and (not priv & privileges.USER_PENDING_VERIFICATION):
 			log.error(f"Login failed for user {username} (user is banned)!")
-			responseData += serverPackets.notification("RealistikOsu: You have been banned!")
+			responseData += serverPackets.notification("Denopia: You have been banned! Stupid cheating fuck.")
 			raise exceptions.loginBannedException()
 
 		# No login errors!
@@ -154,7 +155,7 @@ def handle(tornadoRequest):
 		date3 = present.strftime('%d/%m/%Y')
 		passed = date2 < date3
 		if frozen and not passed:
-				responseToken.enqueue(serverPackets.notification(f"The RealistikOsu staff team has found you suspicious and would like to request a liveplay. You have until {readabledate} (UTC) to provide a liveplay to the staff team. This can be done via the RealistikCentral Discord server. Failure to provide a valid liveplay will result in your account being automatically restricted."))
+				responseToken.enqueue(serverPackets.notification(f"The Denopia staff team has found your plays suspicious and would like to request a liveplay. You have until {readabledate} (UTC) to provide a liveplay to the staff team. This can be done via the Denopia Discord server. Failure to provide a valid liveplay will result in your account being automatically restricted."))
 		elif frozen and passed:
 				responseToken.enqueue(FREEZE_RES_NOTIF)
 				userUtils.restrict(responseToken.userID)
@@ -169,7 +170,7 @@ def handle(tornadoRequest):
 			if donor_expire-int(time.time()) <= 86400*3:
 				expireDays = round((donor_expire-int(time.time()))/86400)
 				expireIn = "{} days".format(expireDays) if expireDays > 1 else "less than 24 hours"
-				responseToken.enqueue(serverPackets.notification("Your supporter status expires in {}! Following this, you will lose your supporter privileges (such as the further profile customisation options, name changes or profile wipes) and will not be able to access supporter features. If you wish to keep supporting RealistikOsu and you don't want to lose your donor privileges, you can donate again by clicking on 'Donate' on our website.".format(expireIn)))
+				responseToken.enqueue(serverPackets.notification("Your supporter status expires in {}! Following this, you will lose your supporter privileges (such as the further profile customisation options, name changes or profile wipes) and will not be able to access supporter features. If you wish to keep supporting Denopia and you don't want to lose your donor privileges, you can donate again by clicking on 'Donate' on our website. (being worked on currently..)".format(expireIn)))
 
 		# Get only silence remaining seconds
 		responseToken.silenceEndTime = silence_end
@@ -208,7 +209,7 @@ def handle(tornadoRequest):
 		if tornadoRequest.request.headers.get("ainu"):
 			log.info(f"Account {userID} tried to use Ainu Client 2020!")
 			if user_restricted:
-				responseToken.enqueue(serverPackets.notification("Nice try BUDDY."))
+				responseToken.enqueue(serverPackets.notification("Nice try you fucking cactus lookin lil bitch."))
 			else:
 				glob.tokens.deleteToken(userID)
 				userUtils.restrict(userID)
@@ -218,7 +219,7 @@ def handle(tornadoRequest):
 		elif osuVersion in ("0Ainu", "b20190326.2", "b20190401.22f56c084ba339eefd9c7ca4335e246f80", "b20191223.3"):
 			log.info(f"Account {userID} tried to use Ainu Client!")
 			if user_restricted:
-				responseToken.enqueue(serverPackets.notification("Nice try BUDDY."))
+				responseToken.enqueue(serverPackets.notification("Nice try you fucking cactus lookin lil bitch."))
 			else:
 				glob.tokens.deleteToken(userID)
 				userUtils.restrict(userID)
@@ -247,7 +248,7 @@ def handle(tornadoRequest):
 				raise exceptions.loginCheatClientsException()
 		# Budget Hacked client.
 		elif osuVersion.startswith("skoot"):
-			if user_restricted: responseToken.enqueue(serverPackets.notification("Comedian."))
+			if user_restricted: responseToken.enqueue(serverPackets.notification("why tf you using 2016 scooter client lmfao."))
 			else:
 				glob.tokens.deleteToken(userID)
 				userUtils.restrict(userID)
@@ -320,14 +321,12 @@ def handle(tornadoRequest):
 		t_str = t.end_time_str()
 		online_users = len(glob.tokens.tokens)
 		# Wylie has his own quote he gets to enjoy only himself lmfao. UPDATE: Electro gets it too.
-		if userID in (4674, 3277): quote = "I lost an S because I saw her lewd"
+		if userID is 1000: quote = "I lost an S because I saw her lewd"
 		# Ced also gets his own AS HE DOESNT WANT TO CHECK FAST SPEED.
-		elif userID == 1002: quote = "juSt Do iT"
+		elif userID == 1001: quote = "juSt Do iT"
 		# Me and relesto are getting one as well lmao. UPDATE: Sky and Aochi gets it too lmao.
-		elif userID in (1000, 1180, 3452, 4812):
-			quote = (f"Hello I'm RealistikBot! The server's official bot to assist you, "
-					  "if you want to know what I can do just type !help")
-		else: quote = random.choice(glob.banchoConf.config['Quotes'])
+
+		quote = random.choice(glob.banchoConf.config['Quotes'])
 		notif = f"""- Online Users: {online_users}\n- {quote}"""
 		if responseToken.admin: notif += f"\n- Elapsed: {t_str}!"
 		responseToken.enqueue(serverPackets.notification(notif))
@@ -344,7 +343,7 @@ def handle(tornadoRequest):
 		# Invalid POST data
 		# (we don't use enqueue because we don't have a token since login has failed)
 		responseData += serverPackets.login_failed()
-		responseData += serverPackets.notification("I have eyes y'know?")
+		responseData += serverPackets.notification("I have eyes y'know? (dont try that again, i'm always watching... ErrorCode: INVPODATA)")
 	except exceptions.loginBannedException:
 		# Login banned error packet
 		responseData += serverPackets.login_banned()
@@ -359,11 +358,11 @@ def handle(tornadoRequest):
 		responseData = bytes()
 		if responseToken is not None:
 			responseData = responseToken.fetch_queue()
-		responseData += serverPackets.notification("Our bancho server is in maintenance mode. Please try to login again later.")
+		responseData += serverPackets.notification("Bancho server is under maintenance. Please check our discord server for updates on this.")
 		responseData += serverPackets.login_failed()
 	except exceptions.banchoRestartingException:
 		# Bancho is restarting
-		responseData += serverPackets.notification("Bancho is restarting. Try again in a few minutes.")
+		responseData += serverPackets.notification("Bancho is restarting. Try again in a minute.")
 		responseData += serverPackets.login_failed()
 	except exceptions.need2FAException:
 		# User tried to log in from unknown IP
@@ -372,7 +371,7 @@ def handle(tornadoRequest):
 		# Using oldoldold client, we don't have client data. Force update.
 		# (we don't use enqueue because we don't have a token since login has failed)
 		responseData += serverPackets.force_update()
-		responseData += serverPackets.notification("What...")
+		responseData += serverPackets.notification("You really be using that old of a client? Fuckin hell man, force updating yo bitch ass ash bones client the fuck bro")
 	except:
 		log.error("Unknown error!\n```\n{}\n{}```".format(sys.exc_info(), traceback.format_exc()))
 	finally:
