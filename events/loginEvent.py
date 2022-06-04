@@ -324,6 +324,7 @@ def handle(tornadoRequest):
 		if userID == 1000: quote = "I made the KKK in OSU!"
 		# Ced also gets his own AS HE DOESNT WANT TO CHECK FAST SPEED.
 		elif userID == 1001: quote = "WoRk On HaNaYo DiPsHiT - koenji"
+		elif userID == 1003: quote = "alien mf's be like"
 		else: quote = random.choice(glob.banchoConf.config['Quotes'])
 		notif = f"""- Online Users: {online_users}\n- {quote}"""
 		if responseToken.admin: notif += f"\n- Elapsed: {t_str}!"
